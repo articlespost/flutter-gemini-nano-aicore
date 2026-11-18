@@ -8,6 +8,8 @@ O repositório contém:
 - um **app Flutter** em arquitetura **feature-first** (`core` + `features`), que verifica a disponibilidade do modelo, acompanha o download e exibe a resposta **token a token**;
 - **45 testes** (erros, retry, datasource com canais simulados, models, repository, service, controller e tela) que rodam **sem aparelho**.
 
+> 📱 **Requisito obrigatório para ver o Gemini Nano funcionando:** um **aparelho físico que esteja na [lista oficial de compatibilidade](https://developers.google.com/ml-kit/genai)** (Pixel 9, Pixel 10, Galaxy S25/S26 e outros, detalhados em [Pré-requisitos](#-pré-requisitos)). **Emulador não funciona**, em nenhuma versão do Android, e celulares fora da lista também não: o app abre, mas mostra "IA on-device indisponível". Os testes automatizados (`flutter test`) são a única parte que roda sem aparelho.
+
 > ⚠️ Código de exemplo para estudo, sujeito a revisão antes de qualquer uso em produção. A Prompt API ainda está em **beta**: assinaturas e comportamento podem mudar entre versões.
 
 ## 📰 Artigo
@@ -98,17 +100,23 @@ gemini_nano_bridge/
 | **JDK** | 17+ |
 | **Aparelho físico compatível** | Com **Android AICore e Gemini Nano** (veja abaixo) |
 
-### ⚠️ Emulador não tem Gemini Nano
+### 📱 Aparelhos compatíveis (obrigatório)
 
-O Gemini Nano roda no **AICore**, um serviço de sistema presente em **aparelhos físicos compatíveis**. Em emulador, o app abre normalmente, mas mostra **"IA on-device indisponível"**: esse é o comportamento esperado, não um erro.
+O Gemini Nano roda no **AICore**, um serviço de sistema disponível apenas em uma **lista fechada de aparelhos físicos**. Segundo a tabela oficial do ML Kit (novembro/2026), a Prompt API funciona, entre outros, em:
 
-Pela tabela oficial do ML Kit, a Prompt API funciona, entre outros, em:
+| Versão do modelo | Aparelhos |
+|---|---|
+| **Gemini Nano 4** | Pixel 10, 10 Pro, 10 Pro XL e 10 Pro Fold; linha Pixel 11; Galaxy S25, S25+, S25 Edge e S25 Ultra; linha Galaxy S26; Galaxy Z Fold7 e Z Flip7; OnePlus 13 e 15; OPPO Find X8, X9 e X10; vivo X200, X300 e X500; modelos recentes das linhas Motorola Razr e Edge |
+| **Gemini Nano 3** | Pixel 9, 9 Pro, 9 Pro XL e 9 Pro Fold; alguns modelos OPPO Reno e realme |
+| **Gemini Nano 2** | Diversos modelos Xiaomi (como as linhas Xiaomi 15 e 17), Redmi, POCO, realme e vivo |
 
-- **Gemini Nano 4:** Pixel 10, Galaxy S25/S26, Galaxy Z Fold7/Flip7 e modelos recentes de OnePlus, OPPO, vivo e Motorola;
-- **Gemini Nano 3:** linha Pixel 9;
-- **Gemini Nano 2:** diversos modelos Xiaomi, Redmi, POCO, realme e vivo.
+- A lista muda com frequência e **nem todo modelo de uma mesma marca está nela**: confira o seu aparelho na [lista completa e atualizada](https://developers.google.com/ml-kit/genai) antes de testar.
+- Mesmo em aparelho da lista, a disponibilidade depende de RAM, versão do sistema e atualização do **Android AICore** (Play Store).
+- **Bootloader desbloqueado não é suportado.**
 
-Consulte a lista completa e atualizada em [ML Kit GenAI](https://developers.google.com/ml-kit/genai). Bootloader desbloqueado não é suportado.
+### ⚠️ Emulador não executa o Gemini Nano
+
+A documentação oficial não prevê emulador: a lista só traz aparelhos físicos. Em emulador, o app abre normalmente, mas mostra **"IA on-device indisponível"**. Esse é o comportamento esperado, não um erro, e serve apenas para validar a UI desse estado.
 
 ---
 
@@ -136,7 +144,7 @@ O que esperar na primeira execução:
 | *Verificando o modelo no aparelho...* | `checkStatus()` em andamento |
 | *Baixando o Gemini Nano* + barra de progresso | O modelo é baixado uma única vez pelo AICore; depois fica disponível offline |
 | Nome do modelo + chip *On-device* | Pronto: escreva um prompt ou toque em uma sugestão |
-| *IA on-device indisponível* | Aparelho (ou emulador) sem Gemini Nano |
+| *IA on-device indisponível* | Emulador ou aparelho fora da lista oficial: o modelo não roda aqui |
 
 > A inferência só é permitida com o app em **primeiro plano**. Ao minimizar o app, a geração em andamento é interrompida de propósito.
 
