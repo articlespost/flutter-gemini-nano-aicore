@@ -118,6 +118,22 @@ O Gemini Nano roda no **AICore**, um serviço de sistema disponível apenas em u
 
 A documentação oficial não prevê emulador: a lista só traz aparelhos físicos. Em emulador, o app abre normalmente, mas mostra **"IA on-device indisponível"**. Esse é o comportamento esperado, não um erro, e serve apenas para validar a UI desse estado.
 
+Ambientes testados fora da lista, todos com o mesmo resultado (estado "indisponível", sem exceção na ponte):
+
+| Ambiente | Android | AICore instalado? | Resultado |
+|---|---|---|---|
+| Emulador `Pixel_4`, imagem Google Play | 13 (API 33) | Não | Indisponível |
+| Emulador com perfil Pixel 10, imagem Google Play mais recente | 17 (API 37) | Não | Indisponível |
+| Redmi Note 12 Pro (físico, Snapdragon 732G, bootloader travado) | 13 (API 33) | Não | Indisponível |
+
+Usar o perfil de um aparelho da lista no emulador não muda nada: o que conta é a presença do AICore no sistema. Para conferir no seu aparelho:
+
+```bash
+adb shell pm list packages | grep -i aicore
+```
+
+Se o comando não retornar nada, o Gemini Nano não roda nesse aparelho, independentemente do código.
+
 ---
 
 ## 📥 Baixar e rodar
