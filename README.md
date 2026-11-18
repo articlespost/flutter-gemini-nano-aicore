@@ -21,7 +21,7 @@ Este repositório acompanha o artigo **"Explorando o Android AICore com Flutter:
 - por que `MethodChannel` para request/response e `EventChannel` para streaming;
 - a ponte em Kotlin, a arquitetura Flutter e as armadilhas encontradas.
 
-🔗 **Leia o artigo completo no LinkedIn:** *(link em breve)*
+🔗 **Leia o artigo completo no LinkedIn:** [Explorando o Android AICore com Flutter: Gemini Nano On-Device via Method Channels e Event Channels](https://www.linkedin.com/pulse/explorando-o-android-aicore-com-flutter-gemini-nano-on-device-sim%C3%B5es-shioe/)
 
 ---
 
